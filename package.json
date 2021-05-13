@@ -10,7 +10,7 @@
     "watch": "tsc -w",
     "test": "jest",
     "addlayer": "copy-node-modules ./ ./dist/layers/nodejs/",
-    "cdk": "yarn run addlayer && cdk"
+    "cdk": "npm run addlayer && cdk"
   },
   "devDependencies": {
     "@aws-cdk/aws-apigateway": "^1.103.0",
