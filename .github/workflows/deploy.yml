@@ -5,7 +5,20 @@ on:
       - main
 
 jobs:
+  Build-Project:
+    name: Build Project
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: borales/actions-yarn@v2.0.0
+        with:
+          cmd: install # will run `yarn install` command
+      - uses: borales/actions-yarn@v2.0.0
+        with:
+          cmd: build # will run `yarn install` command
   Deploy-Stack:
+    name: Deploy Project
+    needs: Build-Project
     runs-on: ubuntu-latest
     steps:
       - name: cdk diff
