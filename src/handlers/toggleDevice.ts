@@ -6,7 +6,7 @@ import { parseLambdaBlob, remoteLambdaCall } from "./utils/remoteLambdaCall";
 
 export interface DesiredState {
   state: "on" | "off",
-  deviceName?: string[];
+  deviceNames?: string[];
 }
 
 export interface ReturnState extends DesiredState {
@@ -49,7 +49,7 @@ export const handler = async (
 
   const newStates = await Promise.all((await getDevices())
     .filter(d => !excludeDevices.includes(d.name))
-    .filter(d => !body.deviceName?.length || body.deviceName?.includes(d.name))
+    .filter(d => !body.deviceNames?.length || body.deviceNames?.includes(d.name))
     .map(d => toggleState(d, body, connection)));
 
   return {
