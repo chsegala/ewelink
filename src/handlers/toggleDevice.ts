@@ -49,7 +49,7 @@ export const handler = async (
 
   const newStates = await Promise.all((await getDevices())
     .filter(d => !excludeDevices.includes(d.name))
-    .filter(d => !body.deviceName && d.name == body.deviceName)
+    .filter(d => !body.deviceName || d.name == body.deviceName)
     .map(d => toggleState(d, body, connection)));
 
   return {
