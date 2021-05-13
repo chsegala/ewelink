@@ -5,7 +5,8 @@ import { getEwelinkAuthConnection } from "./utils/getEwelinkAuthConnection";
 import { parseLambdaBlob, remoteLambdaCall } from "./utils/remoteLambdaCall";
 
 export interface DesiredState {
-  state: "on" | "off"
+  state: "on" | "off",
+  deviceName?: string;
 }
 
 export interface ReturnState extends DesiredState {
@@ -48,6 +49,7 @@ export const handler = async (
 
   const newStates = await Promise.all((await getDevices())
     .filter(d => !excludeDevices.includes(d.name))
+    .filter(d => !!body.deviceName && d.name == body.deviceName)
     .map(d => toggleState(d, body, connection)));
 
   return {
