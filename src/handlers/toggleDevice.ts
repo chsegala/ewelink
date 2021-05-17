@@ -23,7 +23,7 @@ const getDevices = async (): Promise<Device[]> => {
 
 const toggleState = async (d: Device, state: DesiredState, connection: eWelink): Promise<ReturnState> => {
   try {
-    logger.info('Turning ', d.deviceid, ' ', state.state);
+    logger.info(`Turning ${d.deviceid} ${state.state}`, { device: d, state });
     const newState = await connection.setDevicePowerState(d.deviceid, state.state)
     return { ...newState, deviceid: d.deviceid, state: state.state }
   } catch (e) {
