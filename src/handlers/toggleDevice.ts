@@ -3,6 +3,7 @@ import eWelink, { Device } from "ewelink-api";
 import "source-map-support/register";
 import { getEwelinkAuthConnection } from "./utils/getEwelinkAuthConnection";
 import { parseLambdaBlob, remoteLambdaCall } from "./utils/remoteLambdaCall";
+import { logger } from "./utils/configLogger"
 
 export interface DesiredState {
   state: "on" | "off",
@@ -22,7 +23,7 @@ const getDevices = async (): Promise<Device[]> => {
 
 const toggleState = async (d: Device, state: DesiredState, connection: eWelink): Promise<ReturnState> => {
   try {
-    console.info('Turning ', d.deviceid, ' ', state.state);
+    logger.info('Turning ', d.deviceid, ' ', state.state);
     const newState = await connection.setDevicePowerState(d.deviceid, state.state)
     return { ...newState, deviceid: d.deviceid, state: state.state }
   } catch (e) {
@@ -37,7 +38,7 @@ export const handler = async (
   event: APIGatewayProxyEvent
 ): Promise<APIGatewayProxyResult> => {
   // All log statements are written to CloudWatch
-  console.debug("Received event:", event);
+  logger.debug("Received event:", event);
   const excludeDevices = (process.env['EXCLUDED_DEVICES'] ?? '').split('');
   let body: DesiredState = { state: "off" };
 

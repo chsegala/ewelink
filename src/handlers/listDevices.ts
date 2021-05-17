@@ -1,12 +1,13 @@
 import { APIGatewayProxyEvent, APIGatewayProxyResult } from "aws-lambda";
 import "source-map-support/register";
 import { getEwelinkAuthConnection } from "./utils/getEwelinkAuthConnection";
+import { logger } from "./utils/configLogger"
 
 export const handler = async (
   event: APIGatewayProxyEvent
 ): Promise<APIGatewayProxyResult> => {
   // All log statements are written to CloudWatch
-  console.debug("Received event:", event);
+  logger.debug("Received event:", event);
 
   const connection = await getEwelinkAuthConnection();
 

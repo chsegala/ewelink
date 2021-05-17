@@ -1,12 +1,13 @@
 import { APIGatewayProxyEvent, APIGatewayProxyResult } from "aws-lambda";
 import eWelink from "ewelink-api";
 import { LoginResult } from "./utils/loginResult";
+import { logger } from "./utils/configLogger"
 
 let credentials: any;
 
 export const handler = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
   // All log statements are written to CloudWatch
-  console.debug("Received event:", event);
+  logger.debug("Received event:", event);
 
   if (!credentials) {
 
